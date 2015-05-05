@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+		"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" 
+		"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	
+	<definition name="basereader" template="/readercommonjsp/readertemplate.jsp">
+		<put-attribute name="readerheader" value="/readercommonjsp/readerheader.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="baseoperator" template="/WEB-INF/operatorcommonjsp/operatortemplate.jsp">
+		<put-attribute name="operatorheader" value="/WEB-INF/operatorcommonjsp/operatorheader.jsp"></put-attribute>
+		<put-attribute name="operatormenu" value="/WEB-INF/operatorcommonjsp/operatormenu.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 前台主页面 -->
+	<definition name="readermain" extends="basereader">
+		<put-attribute name="content" value="/reader/reader/readermain.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 续借图书表-->
+	<definition name="bookreborrow" extends="basereader">
+		<put-attribute name="content" value="/borrowinfo/reader/bookreborrow.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 前台读者借阅信息 -->
+	<definition name="borrowinfo" extends="basereader">
+		<put-attribute name="content" value="/reader/reader/borrowinfo.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 前台修改读者密码 -->
+	<definition name="modifyreaderinfo" extends="basereader">
+		<put-attribute name="content" value="/reader/reader/modifyreaderinfo.jsp"></put-attribute>
+	</definition>
+	<!-- 读者 -->
+	
+	
+	<!--  添加读者-->
+	<definition name="addreaderinfoxdj" extends="baseoperator">
+		<put-attribute name="content" value="/reader/operator/addreader.jsp"></put-attribute>
+	</definition>
+	
+	
+	<definition name="showreaderlistxdj" extends="baseoperator">
+		<put-attribute name="content" value="/reader/operator/queryreader.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="tpeffectivedatepage" extends="baseoperator">
+		<put-attribute name="content" value="/reader/operator/editreader.jsp"></put-attribute>
+	</definition>
+	<!--  -->
+	<!-- 后台主界面 -->
+	<definition name="operatormain" extends="baseoperator">
+		<put-attribute name="content" value="/index.jsp"></put-attribute>
+	</definition>
+	
+	
+	
+	
+	<!-- 跳转到借书页面 -->
+	<definition name="editBorrowbook" extends="baseoperator">
+		<put-attribute name="content" value="/borrowinfo/operator/editBorrowbook.jsp"></put-attribute>
+	</definition>
+	
+	
+	<!-- 跳转到还书页面 -->
+	<definition name="editReturnbook" extends="baseoperator">
+		<put-attribute name="content" value="/borrowinfo/operator/editReturnbook.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 跳转到预约页面 -->
+	<definition name="editOrderbook" extends="baseoperator">
+		<put-attribute name="content" value="/borrowinfo/operator/editOrderbook.jsp"></put-attribute>
+	</definition>
+	
+	
+<!-- 公告操作 -->	
+	<!-- 前台公告显示页面 -->
+	<definition name="booksysshow" extends="basereader">
+		<put-attribute name="content" value="/notice/reader/noticelist.jsp"></put-attribute>
+	</definition>
+	<!-- 前台单一公告显示页面 -->
+	<definition name="booksysoneshow" extends="basereader">
+		<put-attribute name="content" value="/notice/reader/noticeinfo.jsp"></put-attribute>
+	</definition>
+		<definition name="booksysoneshow1" extends="baseoperator">
+		<put-attribute name="content" value="/notice/reader/noticeinfo.jsp"></put-attribute>
+	</definition>
+	<!-- 后台公告显示页面 -->
+	<definition name="booksysshoww" extends="baseoperator">
+		<put-attribute name="content" value="/notice/operator/noticelisteditdelete.jsp"></put-attribute>
+	</definition>
+	<!-- 后台公告更新页面 -->
+	<definition name="booksysedit" extends="baseoperator">
+		<put-attribute name="content" value="/notice/operator/editnotice.jsp"></put-attribute>
+	</definition>
+	<!-- 后台公告添加页面 -->
+	<definition name="booksysnoteadd"  extends="baseoperator">
+		<put-attribute name="content" value="/notice/operator/addnotice.jsp"></put-attribute>
+	</definition>
+	
+<!--  借阅规则操作-->
+	<!-- 后台规则显示页面 -->
+	<definition name="regushow" extends="baseoperator">
+		<put-attribute name="content" value="/regulation/operator/regulationeditdelete.jsp"></put-attribute>
+	</definition>
+	<!-- 后台规则更新页面 -->
+	<definition name="reguedit" extends="baseoperator">
+		<put-attribute name="content" value="/regulation/operator/editregulation.jsp"></put-attribute>
+	</definition>
+	<!-- 后台规则添加页面 -->
+	<definition name="reguadd"  extends="baseoperator">
+		<put-attribute name="content" value="/regulation/operator/addregulation.jsp"></put-attribute>
+	</definition>	
+<!-- 读者相关 -->
+	<definition name="readerone"  extends="basereader">
+		<put-attribute name="content" value="/reader/reader/borrowinfo.jsp"></put-attribute>
+	</definition>	
+	
+	
+	
+
+	
+		<!-- 前台图书浏览 -->
+	<definition name="booklist" extends="basereader">
+		<put-attribute name="content" value="/book/reader/booklist.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 前台查看图书信息 -->
+	<definition name="bookinfo" extends="basereader">
+		<put-attribute name="content" value="/book/reader/bookinfo.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 前台查看图书信息 -->
+	<definition name="bookinfo1" extends="baseoperator">
+		<put-attribute name="content" value="/book/operator/bookinfo.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 后台主页面 -->
+	<definition name="operatormain" extends="baseoperator">
+		<put-attribute name="content" value="/operator/operator/operatormain.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 添加操作员 -->
+	<definition name="addoperator" extends="baseoperator">
+		<put-attribute name="content" value="/operator/operator/addoperator.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 查看操作员 -->
+	<definition name="operatorlisteditdelete" extends="baseoperator">
+		<put-attribute name="content" value="/operator/operator/operatorlisteditdelete.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 修改操作员 -->
+	<definition name="editoperator" extends="baseoperator">
+		<put-attribute name="content" value="/operator/operator/editoperator.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 添加图书类别 -->
+	<definition name="addbooktype" extends="baseoperator">
+		<put-attribute name="content" value="/book/operator/addbooktype.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 查看图书类别 -->
+	<definition name="booktypelisteditdelete" extends="baseoperator">
+		<put-attribute name="content" value="/book/operator/booktypelisteditdelete.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 修改图书类别 -->
+	<definition name="editbooktype" extends="baseoperator">
+		<put-attribute name="content" value="/book/operator/editbooktype.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 添加图书 -->
+	<definition name="addbook" extends="baseoperator">
+		<put-attribute name="content" value="/book/operator/addbook.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 查看图书借阅情况 -->
+	<definition name="querybook" extends="baseoperator">
+		<put-attribute name="content" value="/book/operator/querybook.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 修改图书 -->
+	<definition name="editbook" extends="baseoperator">
+		<put-attribute name="content" value="/book/operator/editbook.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 查看图书违规情况 -->
+	<definition name="booklisteditdelete" extends="baseoperator">
+		<put-attribute name="content" value="/book/operator/booktypelisteditdelete.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 后台查看所有图书以修改删除 -->
+	<definition name="booklisteditdelete1" extends="baseoperator">
+		<put-attribute name="content" value="/book/operator/booklisteditdelete.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 前台 -->
+
+	
+	
+	<!-- 显示图书的具体信息 -->
+	<definition name="bookinfo" extends="basereader">
+		<put-attribute name="content" value="/book/reader/bookinfo.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 查询图书情况 -->
+	<definition name="searchbook" extends="basereader">
+		<put-attribute name="content" value="/book/reader/searchbook.jsp"></put-attribute>
+	</definition>
+	
+</tiles-definitions>

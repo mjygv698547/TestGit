@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+  <struts>
+
+	<package name="operator" extends="default" namespace="/">
+		
+	
+		<!-- 登录请求 -->
+		<action name="login" class="com.booksys.operator.action.OperatorLoginAction" method="operatorLogin">
+			<result name="success" type="tiles">operatormain</result>
+			<result name="error">operatorLogin.jsp</result>
+			<result name="required">operatorLogin.jsp</result>
+		</action>
+		
+		<!-- 用户名验证请求 -->
+		<action name="checkusername" class="com.booksys.operator.action.OperatorAction" method="isAvaliableUsername"></action>
+		
+		<!-- 根据操作员编号显示操作员信息-->
+		<action name="showoneoperator" class="com.booksys.operator.action.OperatorAction" method="showone">
+			<result name="success" type="tiles">editoperator</result>
+		</action>
+		
+		<!-- 显示操作员请求 -->
+		<action name="showoperators" class="com.booksys.operator.action.OperatorAction" method="showPages">
+			<result name="success" type="tiles">operatorlisteditdelete</result>
+		</action>
+		
+		<!-- 操作员添加连接请求 -->
+		<action name="addoperatorlink">
+			<result type="tiles">addoperator</result>
+		</action>
+		
+		<!-- 修改操作员连接请求 -->
+		<action name="editoperatorlink">
+			<result type="tiles">editoperator</result>
+		</action>
+		
+		<!-- 添加操作员请求 -->
+		<action name="addoperator" class="com.booksys.operator.action.OperatorAction" method="addOperators">
+			<result name="success" type="tiles">addoperator</result>
+		</action>
+		
+		<!-- 修改操作员请求 -->
+		<action name="modifyoperator" class="com.booksys.operator.action.OperatorAction" method="modifyOperators">
+			<result name="success" type="tiles">editoperator</result>
+		</action>
+		
+		<!-- 删除操作员请求 -->
+		<action name="deleteoperator" class="com.booksys.operator.action.OperatorAction" method="deleteOperators">
+			<result name="success" type="redirectAction">
+				<param name="actionName">showoperators</param>
+			</result>
+		</action>
+	</package>
+</struts>

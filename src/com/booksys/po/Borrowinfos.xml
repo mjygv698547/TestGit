@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booksys.po.Borrowinfos">
+
+
+<!-- cym -->
+	<select id="bgettotalrecords" resultType="int" >
+		SELECT COUNT(readerid) FROM readers
+	</select>
+
+	<select id="getborrowinfos" resultMap="borrowinfosmap" parameterType="int">
+		SELECT  b.bookname,r.readername , b.bookstate,borrowdate,lastdate,returndate,REBORROWTIME,orderdate FROM borrowinfos bf JOIN readers r ON (bf.readerid=r.readerid)JOIN books b ON (bf.bookid=b.bookid)  WHERE bf.readerid=#{readerid} 
+	</select>
+
+
+
+<!-- 借书 -->
+<select id="getreaderandbookinfo" parameterType="Borrowinfos" resultMap="borrowinfosmap" >
+SELECT  b.bookname,r.readername , b.bookstate,borrowdate,lastdate,returndate,REBORROWTIME,orderdate FROM borrowinfos bf JOIN readers r ON (bf.readerid=r.readerid)JOIN books b ON (bf.bookid=b.bookid)  WHERE bf.readerid=#{readerid} AND bf.bookid=#{bookid} and bf.returndate is null
+</select>
+
+<update id="borrowbookupadtebook" parameterType="Borrowinfos" >
+UPDATE books SET bookstate = 1 WHERE bookid=#{bookid}
+</update>
+
+
+<insert id="borrowbook" parameterType="Borrowinfos">
+INSERT INTO borrowinfos( borrowinfosid,readerid,bookid,borrowdate,lastdate,returndate,reborrowtime,Orderdate) 
+VALUES(borrowinfos_seq.nextval,#{readerid},#{bookid},to_date(to_char(SYSDATE,'yyyy-mm-dd'),'yyyy-mm-dd'),to_date(to_char(SYSDATE+#{reborrowday},'yyyy-mm-dd'),'yyyy-mm-dd'),'',0,'')
+</insert>
+
+
+<select id="getdate" resultType="java.sql.Date">
+	select to_date(to_char(SYSDATE,'yyyy-mm-dd'),'yyyy-mm-dd')
+	from dual
+</select>
+
+
+<select id="getbookidbybookcode" resultType="Integer" parameterType="String">
+	SELECT bookid FROM books b WHERE b.bookcode=#{bookcode}
+</select>
+
+
+
+<!-- 还书 -->
+<select id="getreturnbookinfo" parameterType="String" resultMap="borrowinfosmap" >
+SELECT r.readerid,r.readername,bf.borrowinfosid,bf.borrowdate,bf.lastdate,bf.returndate,bf.reborrowtime,bf.orderdate,b.bookid ,b.bookname,b.bookstate FROM borrowinfos bf join books b on (bf.bookid=b.bookid) JOIN readers r ON(bf.readerid=r.readerid)WHERE b.bookcode=#{bookcode}
+</select>
+
+<update id="returnbook" parameterType="Integer">
+update borrowinfos set returndate =to_date(to_char(SYSDATE,'yyyy-mm-dd'),'yyyy-mm-dd') where borrowinfosid=#{borrowinfosid}
+</update>
+
+<select id="getorderinfobybookid" parameterType="Integer" resultMap="borrowinfosmap">
+SELECT r.readerid,r.readername,bf.borrowinfosid,bf.borrowdate,bf.lastdate,bf.returndate,bf.reborrowtime,bf.orderdate,b.bookid ,b.bookname,b.bookstate FROM borrowinfos bf join books b on (bf.bookid=b.bookid) JOIN readers r ON(bf.readerid=r.readerid)WHERE b.bookid = #{bookid} AND bf.orderdate IS NOT NULL
+</select>
+
+<!-- 预约 -->
+<select id="getbookinfobybookname" parameterType="String" resultMap="books">
+SELECT b.bookid,b.bookname,b.bookauthor,b.bookisbn,b.bookcode,b.bookstate FROM books b WHERE b.bookname LIKE  '%'||#{bookname}||'%'
+</select>
+
+
+<update id="orderbookbybookid" parameterType="Integer" >
+UPDATE books SET bookstate = 2 WHERE bookid=#{bookid}
+</update>
+
+<insert id="editborrowinfobybookidandreaderid" parameterType="Borrowinfos" >
+INSERT INTO borrowinfos(borrowinfosid,readerid,bookid,borrowdate,lastdate,returndate,reborrowtime,orderdate)
+VALUES (borrowinfos_seq.nextval,#{readerid},#{bookid},NULL,NULL,NULL,NULL,to_date(to_char(SYSDATE,'yyyy-mm-dd'),'yyyy-mm-dd'))
+</insert>
+
+
+<!-- 预约 -->
+<select id="getorderbooklistbyreaderid" parameterType="Integer" resultMap="borrowinfosmap" >
+SELECT bf.borrowinfosid ,b.bookname,bf.lastdate,bf.bookid,bf.reborrowtime FROM borrowinfos bf join books b on (bf.bookid=b.bookid) where bf.readerid=#{readerid} and bf.returndate is null
+</select>
+
+
+
+
+<!-- 修改续借日期 -->
+<update id="updatereborrowtimesandlastdate" parameterType="Borrowinfos">
+UPDATE borrowinfos bf SET bf.lastdate=bf.lastdate+#{reborrowday},bf.reborrowtime = bf.reborrowtime+1 WHERE bf.bookid=#{bookid} AND bf.readerid=#{readerid} 
+</update>
+
+<select id="getreaderstate" resultType="Borrowinfos"  parameterType="int" >
+select bf.borrowinfosid from borrowinfos bf where bf.readerid=#{readerid} and bf.returndate is null 
+</select>
+
+<resultMap type="Readers" id="readers" >
+	<id property="readerid" column="readerid" javaType="java.lang.Integer"/>
+	<result property="readername" column="readername" javaType="java.lang.String"></result>
+</resultMap>
+
+
+
+
+
+<resultMap type="Books" id="books">
+	<id property="bookid" column="bookid" javaType="java.lang.Integer"/>
+	<result property="bookname" column="bookname" javaType="java.lang.String"></result>
+	<result property="bookauthor" column="bookauthor" javaType="java.lang.String"></result>
+	<result property="bookstate" column="bookstate" javaType="java.lang.Integer"></result>
+	<result property="bookisbn" column="bookisbn" javaType="java.lang.String"></result>
+	<result property="bookcode" column="bookcode" javaType="java.lang.String"></result>
+</resultMap>
+
+
+
+
+
+
+<resultMap type="Borrowinfos" id="borrowinfosmap">
+	<id property="borrowinfosid" column="borrowinfosid" javaType="java.lang.Integer"/>
+	<result property="readerid" column="readerid" javaType="java.lang.Integer"></result>
+	<result property="bookid" column="bookid" javaType="java.lang.Integer"></result>
+	<result property="borrowdate" column="borrowdate" javaType="java.sql.Date"></result>
+	<result property="lastdate" column="lastdate" javaType="java.sql.Date"></result>
+	<result property="returndate" column="returndate" javaType="java.sql.Date"></result>
+	<result property="reborrowtime" column="reborrowtime" javaType="java.lang.Integer"></result>
+	<result property="orderdate" column="orderdate" javaType="java.sql.Date"></result>
+	<association property="books" column="bookid" javaType="com.booksys.po.Books" resultMap="books"></association>
+	<association property="readers" column="readerid" javaType="com.booksys.po.Readers" resultMap="readers"></association>
+</resultMap>
+</mapper>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booksys.po.Books">
+	
+	
+	<!-- 根据条码号获得图书信息 -->
+	<select id="getbookbycodexdj" resultType="Books" parameterType="String">
+		SELECT bookid,bookname,bookcode,bookisbn,bookstate
+		FROM books
+		WHERE bookcode=#{bookcode}
+	</select>
+	
+	<!-- 显示所有图书信息 -->
+	<select id="getbooks" resultType="Books">
+		SELECT bookid,bookname,bookauthor,bookisbn,bookpublish,bookpublishdate,bookprice,bookindate,bookcode,bookstate,booktypeid
+		FROM books ORDER BY bookid DESC
+	</select>
+	
+	<!-- 获取图书总记录数 -->
+	<select id="getbooktotalrecords" resultType="int">
+		SELECT COUNT(bookid) FROM books
+	</select>
+	
+	<!-- 根据图书编号获得图书信息 -->
+	<select id="getbookbyid" resultType="Books" parameterType="int">
+		SELECT bookid,bookname,bookauthor,bookisbn,bookpublish,bookpublishdate,bookprice,bookindate,bookcode,bookstate,booktypeid
+		FROM books
+		WHERE bookid = #{bookid}
+	</select>
+	
+	<!-- 后台 -->
+	<!-- 添加图书信息 -->
+	<insert id="addbooks" parameterType="Books">
+		INSERT INTO books(bookid,bookname,bookauthor,bookisbn,bookpublish,bookpublishdate,bookprice,bookindate,bookcode,bookstate,booktypeid)
+		VALUES(books_seq.nextval,#{bookname},#{bookauthor},#{bookisbn},#{bookpublish},#{bookpublishdate},#{bookprice},#{bookindate},#{bookcode},#{bookstate},#{booktypeid})
+	</insert>
+	
+	<!-- 修改图书信息 -->
+	<update id="modifybooks" parameterType="Books">
+		UPDATE books SET bookname=#{bookname},bookauthor=#{bookauthor},bookisbn=#{bookisbn},bookpublish=#{bookpublish},bookpublishdate=#{bookpublishdate},bookprice=#{bookprice},bookindate=#{bookindate},bookcode=#{bookcode},bookstate=#{bookstate}
+		WHERE bookid=#{bookid}
+	</update>
+	
+	<!-- 删除图书信息 -->
+	<delete id="deletebooks" parameterType="Books">
+		DELETE FROM books
+		WHERE bookstate=0
+		AND bookid=#{bookid}
+	</delete>
+	
+	<!-- 根据书名、条码号、ISBN 任一条件进行查询 -->
+	<select id="getbookbynamecodeisbn" resultType="Books" parameterType="String">
+		SELECT bookid,bookname,bookcode,bookisbn, bookstate
+		FROM books 
+		<where>
+		<if test="bookname!=''">							
+		 bookname LIKE '%'||#{bookname}||'%'
+		</if>
+		<if test="bookcode!=''">				 
+		 AND bookcode LIKE '%'||#{bookcode}||'%'	
+		 </if>	
+		 <if test="bookisbn!=''">	
+		 AND bookisbn LIKE '%'||#{bookisbn}||'%'	
+		 </if>	
+		</where>
+	</select>
+	
+	<!-- 根据书名获得图书信息 -->
+	<select id="getbookbyname" resultType="Books" parameterType="String">
+		SELECT bookid,bookname,bookcode,bookisbn,bookstate
+		FROM books
+		WHERE bookname=#{bookname}
+	</select>	
+	
+	<!-- 根据条码号获得图书信息 -->
+	<select id="getbookbycode" resultType="Books" parameterType="String">
+		SELECT bookid, bookname,bookcode,bookisbn,bookstate
+		FROM books
+		WHERE bookcode=#{bookcode}
+	</select>
+	
+	<!-- 根据ISBN获得图书信息 -->
+	<select id="getbookbyisbn" resultType="Books" parameterType="String">	
+		SELECT bookid,bookname,bookcode,bookisbn,bookstate
+		FROM books
+		WHERE bookisbn=#{bookisbn}
+	</select>
+	
+	<!-- 前台显示图书的详细信息 -->
+	<select id="getbookinfo" parameterType="Books" resultMap="bookinfomap">
+		SELECT b.bookid,b.bookname,b.bookauthor,b.bookisbn,b.bookpublish,b.bookpublishdate,b.bookprice,b.bookindate,b.bookcode,b.bookstate,bt.booktypename,bt.booktypelocation
+		FROM booktypes bt
+		JOIN books b
+		ON(bt.booktypeid = b.booktypeid)
+		<where>
+			b.bookid=#{bookid}
+		</where>		 
+	</select>
+	
+	<!-- 后台显示图书的详细信息 -->
+	<select id="getbookinfos" parameterType="Books" resultMap="bookinfomap">
+		SELECT b.bookid,b.bookname,b.bookauthor,b.bookisbn,b.bookpublish,b.bookpublishdate,b.bookprice,b.bookindate,b.bookcode,b.bookstate,bt.booktypename,bt.booktypelocation
+		FROM booktypes bt
+		JOIN books b
+		ON(bt.booktypeid = b.booktypeid)
+		<where>
+			b.bookid=#{bookid}
+		</where>		 
+	</select>
+	
+	
+	
+	<resultMap type="Books" id="bookinfomap">
+		<id property="bookid" column="bookid" javaType="java.lang.Integer" />
+		<result property="bookname" column="bookname" javaType="java.lang.String"/>
+		<result property="bookauthor" column="bookauthor" javaType="java.lang.String"/>
+		<result property="bookisbn" column="bookisbn" javaType="java.lang.String"/>
+		<result property="bookpublish" column="bookpublish" javaType="java.lang.String"/>
+		<result property="bookpublishdate" column="bookpublishdate" javaType="java.sql.Date"/>
+		<result property="bookprice" column="bookprice" javaType="java.lang.Double"/>
+		<result property="bookindate" column="bookindate" javaType="java.sql.Date"/>
+		<result property="bookcode" column="bookcode" javaType="java.lang.String"/>
+		<result property="bookstate" column="bookstate" javaType="java.lang.Integer"/>
+		<association property="booktype" column="booktypeid" javaType="com.booksys.po.Books" resultMap="booktypemap"></association>
+	</resultMap>
+	
+	<!-- 员工查询 -->
+	
+	<!-- 根据图书类别显示图书信息 -->
+	<select id="getbookbybooktypeid" parameterType="Books" resultMap="bookmap">
+		SELECT b.bookid,b.bookname,b.bookauthor,b.bookisbn,b.bookpublish,b.bookstate,bt.booktypename,bt.booktypelocation
+		FROM books b
+		JOIN booktypes bt
+		ON(b.booktypeid = bt.booktypeid)
+		where bt.booktypeid=#{booktypeid}	
+	</select>
+	
+	<resultMap type="Booktypes" id="booktypemap">
+		<id property="booktypeid" column="booktypeid" javaType="java.lang.Integer" />
+		<result property="booktypename" column="booktypename" javaType="java.lang.String"/>
+		<result property="booktypelocation" column="booktypelocation" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<resultMap type="Books" id="bookmap">
+		<id property="bookid" column="bookid" javaType="java.lang.Integer" />
+		<result property="bookname" column="bookname" javaType="java.lang.String"/>
+		<result property="bookauthor" column="bookauthor" javaType="java.lang.String"/>
+		<result property="bookpublish" column="bookpublish" javaType="java.lang.String"/>
+		<result property="bookstate" column="bookstate" javaType="java.lang.Integer"/>
+		<association property="booktype" column="booktypeid" javaType="com.booksys.po.Books" resultMap="booktypemap"></association>
+	</resultMap>
+	
+	<!-- 获取本图书类别的图书总记录数 -->
+	<select id="getbooktotalrecordsbybooktypeid" resultType="int">
+		SELECT COUNT(bookid) FROM books WHERE booktypeid=#{booktypeid}
+	</select>
+	
+	<!-- 根据书名、ISBN、出版社、作者 任一条件或组合进行查询 -->
+	<select id="getbookbynameisbnpublishauthor" resultType="Books" parameterType="String">
+		SELECT bookid,bookname,bookauthor,bookpublish,bookstate
+		FROM books
+		<where>
+		<if test="bookname!=''">							
+		 bookname LIKE '%'||#{bookname}||'%'
+		</if>
+		<if test="bookisbn!=''">				 
+		 AND bookcode LIKE '%'||#{bookisbn}||'%'	
+		 </if>	
+		 <if test="bookpublish!=''">	
+		 AND bookpublish LIKE '%'||#{bookpublish}||'%'	
+		 </if>	
+		 <if test="bookauthor!=''">	
+		 AND bookauthor LIKE '%'||#{bookauthor}||'%'	
+		 </if>
+		</where>
+	</select>
+	
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booksys.po.Regulations">
+
+	<!-- 显示所有公告信息 -->
+	<select id="getregulations" resultType="Regulations">
+		SELECT
+		regulationid,regulationname,restborrowday,reborrowday,maxreborrowtime,orderrestday
+		FROM regulations ORDER BY regulationid DESC
+	</select>
+
+
+	<!-- 获取公告总记录数 -->
+	<select id="rgettotalrecords" resultType="int">
+        SELECT COUNT(regulationid) FROM regulations
+	</select>
+
+
+	<!-- 根据id 获得notices -->
+	<select id="getregulationbyid" resultType="Regulations"
+		parameterType="int">
+		SELECT
+		regulationid,regulationname,restborrowday,reborrowday,maxreborrowtime,orderrestday
+		FROM regulations WHERE regulationid =#{regulationid}
+	</select>
+	
+	
+	<!-- 更新操作 -->
+	<!-- 
+	<update id="updatenotice" parameterType="Notices">
+	UPDATE notices SET noticetitle=#{noticetitle},noticeperson=#{noticeperson},lastmodifydate=SYSDATE WHERE noticeid =#{noticeid}
+	</update>
+	-->
+	<!-- 删除操作 -->
+	
+	<delete id="deleteregulation" parameterType="int">
+	 	delete from regulations where regulationid=#{Regulationid}
+	</delete>
+	
+	<!-- 获取公告编号序列 -->
+	<select id="getregulationid" resultType="int">
+		select regulations_seq.nextval from dual
+	</select>
+
+
+	<!-- 添加公告信息 -->
+	<insert id="addregulation" parameterType="Regulations">
+		INSERT INTO regulations(regulationid,regulationname,restborrowday,reborrowday,maxreborrowtime,orderrestday)
+		VALUES(#{regulationid},#{regulationname},#{restborrowday},#{reborrowday},#{maxreborrowtime},#{orderrestday})
+	</insert>
+	
+	<!-- 修改公告信息 -->
+	<update id="editregulation" parameterType="Regulations">
+		UPDATE regulations SET regulationname=#{regulationname},restborrowday=#{restborrowday},reborrowday=#{reborrowday},maxreborrowtime=#{maxreborrowtime},orderrestday=#{orderrestday}
+		WHERE regulationid=#{regulationid}
+	</update>
+	
+	
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booksys.po.Readers">
+
+<select id="getregulationbyreaderid" parameterType="Readers" resultMap="readerwithregulationsmap">
+select re.regulationid,regulationname,restborrowday,reborrowday,maxreborrowtime,orderrestday,r.readerid,r.readername,r.readeridcard,r.readerpwd,r.createdate,r.effectivedate,r.deaddate from regulations re join readers r on (re.regulationid = r.regulationid) where r.readerid=#{readerid}
+</select>
+
+<select id="readerlogin" parameterType="Readers" resultType="Readers">
+select r.readerid,r.deaddate,r.regulationid from readers r where r.readerid=#{readerid} and r.readerpwd=#{readerpwd} 
+</select>
+
+<select id="getreaderxdj" parameterType="int" resultType="Readers" >
+SELECT  r.readerid,r.readername FROM Readers r WHERE  r.readerid=#{readerid}
+</select>
+
+<select id="turnreaderidcardtoreaderid" parameterType="String" resultType="int" >
+select r.readerid from readers r where r.readeridcard=#{readeridcard}
+</select>
+
+<!-- cym 查询部分 -->
+	<!-- 获取总记录数 -->
+	<select id="gettotalrecords" resultType="int">
+        SELECT COUNT(readerid) FROM readers
+	</select> 
+	<update id="editreader" parameterType="Readers">
+	update readers set readerpwd=#{newpassword} where readerid=#{readerid} and readerpwd= #{readerpwd}
+	</update> 
+
+
+
+
+<!-- 添加读者 -->
+<insert id="addreadersxdj" parameterType="Readers">
+INSERT INTO readers(readerid,readername,readeridcard,readerpwd,createdate,effectivedate,deaddate,cash,telephone,regulationid)
+VALUES(#{readerid},#{readername},#{readeridcard},'123456',sysdate,#{effectivedate},#{deaddate},#{cash},#{telephone},#{regulationid})
+</insert>
+
+
+<select id="getreaderlist" resultType="Readers" >
+select r.readerid,r.readername,r.readeridcard,r.effectivedate,r.deaddate from readers r
+</select>
+
+<select id="getreaderbyreaderid" resultType="Readers" parameterType="int" >
+select r.readerid,r.readername,r.readeridcard,r.effectivedate,r.deaddate from readers r where r.readerid=#{readerid}
+</select>
+
+<update id="updatereaderdeaddate" parameterType="Readers">
+UPDATE  readers  r SET r.deaddate = #{deaddate} WHERE r.readerid=#{readerid}
+</update>
+
+
+
+<delete id="deletereaderbyid" parameterType="int">
+DELETE readers r WHERE r.readerid =#{readerid}
+</delete>
+
+
+
+
+
+<resultMap type="Regulations" id="regulations">
+	<id property="regulationid" column="regulationid" javaType="java.lang.Integer"/>
+	<result property="regulationname" column="regulationname" javaType="java.lang.String"></result>
+	<result property="restborrowday" column="restborrowday" javaType="java.lang.Integer"></result>
+	<result property="reborrowday" column="reborrowday" javaType="java.lang.Integer"></result>
+	<result property="maxreborrowtime" column="maxreborrowtime" javaType="java.lang.Integer"></result>
+	<result property="orderrestday" column="orderrestday" javaType="java.lang.Integer"></result>
+</resultMap>
+
+
+
+<resultMap type="Readers" id="readerwithregulationsmap">
+	<id property="readerid" column="readerid" javaType="java.lang.Integer"/>
+	<result property="readername" column="readername" javaType="java.lang.String"></result>
+	<result property="readeridcard" column="readeridcard" javaType="java.lang.String"></result>
+	<result property="readerpwd" column="readerpwd" javaType="java.lang.String"></result>
+	<result property="createdate" column="createdate" javaType="java.sql.Date"></result>
+	<result property="effectivedate" column="effectivedate" javaType="java.sql.Date"></result>
+	<result property="deaddate" column="deaddate" javaType="java.sql.Date"></result>
+<association property="regulations" column="regulationid" javaType="com.booksys.po.Regulations" resultMap="regulations"></association>
+    
+</resultMap>
+
+</mapper>

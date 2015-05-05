@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booksys.po.Booktypes">
+
+	<!-- 显示所有图书类别信息 -->
+	<select id="getbooktypes" resultType="Booktypes">
+		SELECT booktypeid,booktypename,booktypelocation
+		FROM booktypes ORDER BY booktypeid DESC
+	</select>
+	
+	<!-- 获取图书类别总记录数 -->
+	<select id="getbooktypetotalrecords" resultType="int">
+		SELECT COUNT(booktypeid) FROM booktypes
+	</select>
+	
+	<!-- 根据图书类别编号获得图书类别信息 -->
+	<select id="getbooktypebyid" resultType="Booktypes" parameterType="int">
+		SELECT booktypeid,booktypename,booktypelocation
+		FROM booktypes
+		WHERE booktypeid = #{booktypeid}
+	</select>
+	
+	<!-- 添加图书类别信息 -->
+	<insert id="addbooktypes" parameterType="Booktypes">
+		INSERT INTO booktypes(booktypeid,booktypename,booktypelocation)
+		VALUES(booktypes_seq.nextval,#{booktypename},#{booktypelocation})
+	</insert>
+	
+	<!-- 修改图书类别信息 -->
+	<update id="modifybooktypes" parameterType="Booktypes">
+		UPDATE booktypes SET booktypename=#{booktypename},booktypelocation=#{booktypelocation}
+		WHERE booktypeid=#{booktypeid}
+	</update>
+	
+	<!-- 删除图书类别信息 -->
+	<delete id="deletebooktypes" parameterType="Booktypes">
+		DELETE FROM booktypes WHERE booktypeid=#{booktypeid}
+	</delete>
+	
+	<resultMap type="Books" id="bookmap">
+		<id property="bookid" column="bookid" javaType="java.lang.Integer" />
+		<result property="bookname" column="bookname" javaType="java.lang.String"/>
+		<result property="bookauthor" column="bookauthor" javaType="java.lang.String"/>
+		<result property="bookpublish" column="bookpublish" javaType="java.lang.String"/>
+		<result property="bookstate" column="bookstate" javaType="java.lang.Integer"/>		
+	</resultMap>
+	
+	<resultMap type="Booktypes" id="booktypemap">
+		<id property="booktypeid" column="booktypeid" javaType="java.lang.Integer" />
+		<result property="booktypename" column="booktypename" javaType="java.lang.String"/>
+		<result property="booktypelocation" column="booktypelocation" javaType="java.lang.String"/>
+		<association property="book" column="booktypeid" javaType="com.booksys.po.Books" resultMap="bookmap"></association>
+	</resultMap>
+		
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

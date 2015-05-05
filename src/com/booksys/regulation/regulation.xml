@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<package name="regulation" extends="default" namespace="/">
+	
+	<!-- 添加规则请求 -->
+	<action name="addregulation" class="com.booksys.regulation.action.RegulationAction" method="AddRegulation">
+		<result name="success" type="chain">showregulations</result>
+		<result name="error">/regulation/operator/addregulation.jsp</result>
+	</action>
+	<!-- 添加规则链接请求 -->
+	<action name="addregulationlink">
+		<result type="tiles">reguadd</result>
+	</action>		
+		
+	<!-- 编辑规则请求 -->
+	<action name="editregulation" class="com.booksys.regulation.action.RegulationAction" method="editregulation">
+		<result name="success" type="chain">showregulations</result>
+		<result name="error">/regulation/operator/editnotice.jsp</result>
+	</action>
+	<!-- 编辑规则链界请求 -->
+	<action name="editregulationlink" class="com.booksys.regulation.action.RegulationAction" method="showone">
+		<result type="tiles">reguedit</result>
+	</action>
+		
+	<!-- 后台显示规则请求 -->
+	<action name="showregulations" class="com.booksys.regulation.action.RegulationAction" method="showpages">
+		<result name="success" type="tiles">regushow</result>
+	</action>	
+
+	
+ 	<!-- 删除规则请求 -->
+	<action name="deleteregulations" class="com.booksys.regulation.action.RegulationAction" method="DeleteRegulation">
+		<result name="success" type="chain" >showregulations</result>
+		<result name="fail" type="chain">showregulations</result>
+	</action>
+	
+ 	<!-- 显示单一规则 -->
+ 	<!-- 
+	<action name="rshowone" class="com.booksys.regulation.action.RegulationAction" method="showone">
+		<result name="success" type="tiles">booksysoneshow</result>
+	</action>
+	-->
+		
+	</package>
+</struts>

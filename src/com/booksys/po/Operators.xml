@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booksys.po.Operators">
+	
+	<!-- 登录验证 -->
+	<select id="checklogin" parameterType="Operators" resultType="Operators">
+		SELECT operatorid,orealname,oisadmin FROM operators WHERE ousername=#{ousername} AND ouserpwd=#{ouserpwd}
+	</select>
+	
+	<!-- 验证用户名是否可用 -->
+	<select id="checkusername" parameterType="String" resultType="Operators">
+		SELECT operatorid,ousername FROM operators WHERE ousername=#{ousername}
+	</select>
+	
+	<!-- 后台 -->
+	<!-- 添加操作员信息 -->
+	<insert id="addoperators" parameterType="Operators">
+		INSERT INTO operators(operatorid,ousername,ouserpwd,orealname,osex,oisadmin)
+		VALUES(operators_seq.nextval,#{ousername},#{ouserpwd},#{orealname},#{osex},#{oisadmin})
+	</insert>
+	
+	<!-- 修改操作员信息 -->
+	<update id="modifyoperators" parameterType="Operators">
+		UPDATE operators SET ousername=#{ousername},ouserpwd=#{ouserpwd},orealname=#{orealname},osex=#{osex},oisadmin=#{oisadmin}
+		WHERE operatorid=#{operatorid}
+	</update>
+	
+	<!-- 删除操作员信息 -->
+	<delete id="deleteoperators" parameterType="Operators">
+		DELETE FROM operators WHERE operatorid=#{operatorid}
+	</delete>
+	
+	<!-- 显示所有操作员信息 -->
+	<select id="getoperators" resultType="Operators">
+		SELECT operatorid,ousername,ouserpwd,orealname,osex,oisadmin
+		FROM operators ORDER BY operatorid DESC
+	</select>
+	
+	<!-- 获取操作员总记录数 -->
+	<select id="getoperatortotalrecords" resultType="int">
+		SELECT COUNT(operatorid) FROM operators
+	</select>
+	
+	<!-- 根据操作员编号获得操作员信息 -->
+	<select id="getoperatorbyid" resultType="Operators" parameterType="int">
+		SELECT operatorid,ousername,ouserpwd,orealname,osex,oisadmin
+		FROM operators
+		WHERE operatorid = #{operatorid}
+	</select>
+</mapper>

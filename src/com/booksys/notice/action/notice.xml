@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="notice" extends="default" namespace="/">
+	
+	<!-- 添加公告请求 -->
+	<action name="addnotice" class="com.booksys.notice.action.NoticeAction" method="AddNotice">
+		<result name="success" type="chain">showwnotices</result>
+		<result name="error">/notice/operator/addnotice.jsp</result>
+	</action>
+	<!-- 添加公告链接请求 -->
+	<action name="addnoticelink">
+		<result type="tiles">booksysnoteadd</result>
+	</action>		
+		
+	<!-- 编辑公告请求 -->
+	<action name="editnotice" class="com.booksys.notice.action.NoticeAction" method="editnotice">
+		<result name="success" type="chain">showwnotices</result>
+		<result name="error">/notice/operator/editnotice.jsp</result>
+	</action>
+	<!-- 编辑公告链界请求 -->
+	<action name="editnoticelink" class="com.booksys.notice.action.NoticeAction" method="showone">
+		<result type="tiles">booksysedit</result>
+	</action>
+	
+	<!-- 前台显示公告请求 -->
+	<action name="shownotices" class="com.booksys.notice.action.NoticeAction" method="showpages">
+		<result name="success" type="tiles">booksysshow</result>
+	</action>	
+	
+	
+	
+	<!-- 后台显示公告请求 -->
+	<action name="showwnotices" class="com.booksys.notice.action.NoticeAction" method="showpages">
+		<result name="success" type="tiles">booksysshoww</result>
+	</action>	
+
+	
+ 	<!-- 删除公告请求 -->
+	<action name="deletenotices" class="com.booksys.notice.action.NoticeAction" method="DeleteNotice">
+		<result name="success" type="chain" >showwnotices</result>
+		<result name="fail" type="chain">shownotices</result>
+	</action>
+	
+	<!-- 显示单一公告 -->
+	<action name="showone" class="com.booksys.notice.action.NoticeAction" method="showone">
+		<result name="success" type="tiles">booksysoneshow1</result>
+	</action>
+	
+	<action name="showone1" class="com.booksys.notice.action.NoticeAction" method="showone">
+		<result name="success" type="tiles">booksysoneshow</result>
+	</action>
+
+	</package>
+</struts>

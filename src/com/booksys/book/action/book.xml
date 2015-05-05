@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<package name="book" extends="default" namespace="/">
+	
+		<!-- 显示图书请求 -->
+		<action name="showbooks" class="com.booksys.book.action.BookAction" method="showPages">
+			<result name="success" type="tiles">booklisteditdelete1</result>
+		</action>
+		
+		<!-- 根据图书编号显示图书信息以进行修改-->
+		<action name="showonebook" class="com.booksys.book.action.BookAction" method="showone">
+			<result name="success" type="tiles">editbook</result>
+		</action>
+		
+		<!-- 根据图书编号显示图书具体信息-->
+		<action name="showbookinfolink" class="com.booksys.book.action.BookAction" method="getbookinfo">
+			<result name="success" type="tiles">bookinfo</result>
+		</action>
+		
+		<!-- 根据图书编号显示图书具体信息-->
+		<action name="showbookinfolink1" class="com.booksys.book.action.BookAction" method="getbookinfo1">
+			<result name="success" type="tiles">bookinfo1</result>
+		</action>
+				
+		<!-- 添加图书连接请求 -->
+		<action name="addbooklink" class="com.booksys.book.action.BookAction" method="showBooktypes">
+			<result type="tiles">addbook</result>
+		</action>
+		
+		<!-- 添加图书请求 -->
+		<action name="addbook" class="com.booksys.book.action.BookAction" method="addBooks">
+			<result name="success" type="tiles">addbook</result>
+			<result name="input" type="tiles">addbook</result>
+		</action>
+		
+		<!-- 修改图书请求 -->
+		<action name="modifybook" class="com.booksys.book.action.BookAction" method="modifyBooks">
+			<result name="success" type="tiles">editbook</result>
+		</action>
+		
+		<!-- 删除图书请求 -->
+		<action name="deletebook" class="com.booksys.book.action.BookAction" method="deleteBooks">
+			<result name="success" type="redirectAction">
+				<param name="actionName">showbooks</param>
+			</result>
+		</action>
+		
+		<!-- 根据书名显示借阅信息-->
+		<action name="querybookbyname" class="com.booksys.book.action.BookAction" method="querybookbyname">
+			<result name="success" type="tiles">querybook</result>
+		</action>
+		
+		<!-- 根据条码号显示借阅信息-->
+		<action name="querybookbycode" class="com.booksys.book.action.BookAction" method="querybookbycode">
+			<result name="success" type="tiles">querybook</result>
+		</action>
+		
+		<!-- 根据ISBN显示借阅信息-->
+		<action name="querybookbyisbn" class="com.booksys.book.action.BookAction" method="querybookbyisbn">
+			<result name="success" type="tiles">querybook</result>
+		</action>
+		
+		<!-- 根据书名/条码号/ISBN显示借阅信息-->
+		<action name="querybookbynamecodeisbn" class="com.booksys.book.action.BookAction" method="querybookbynamecodeisbn">
+			<result name="success" type="tiles">querybook</result>
+		</action>
+		
+		<!-- 图书借阅情况连接请求 -->
+		<action name="querybookbynamecodeisbnlink">
+			<result name="success" type="tiles">
+				<param name="location">querybook</param>
+			</result>
+		</action>
+				
+		<!-- 显示图书类别请求 -->
+		<action name="showbooktypes" class="com.booksys.book.action.BookAction" method="showPagesbooktype">
+			<result name="success" type="tiles">booktypelisteditdelete</result>
+		</action>
+		
+		<!-- 根据图书类别编号显示图书类别信息-->
+		<action name="showonebooktype" class="com.booksys.book.action.BookAction" method="showonet">
+			<result name="success" type="tiles">editbooktype</result>
+		</action>
+		
+		<!-- 添加图书类别连接请求 -->
+		<action name="addbooktypelink">
+			<result type="tiles">addbooktype</result>
+		</action>
+		
+		<!-- 添加图书类别请求 -->
+		<action name="addbooktype" class="com.booksys.book.action.BookAction" method="addBooktypes">
+			<result name="success" type="tiles">addbooktype</result>
+		</action>
+		
+		<!-- 修改图书类别请求 -->
+		<action name="modifybooktype" class="com.booksys.book.action.BookAction" method="modifyBooktypes">
+			<result name="success" type="tiles">editbooktype</result>
+		</action>
+		
+		<!-- 删除图书类别请求 -->
+		<action name="deletebooktype" class="com.booksys.book.action.BookAction" method="deleteBooktypes">
+			<result name="success" type="redirectAction">
+				<param name="actionName">showbooktypes</param>
+			</result>
+		</action>
+		
+		<!-- 前台 -->
+		<!-- 图书查询连接请求 -->
+		<action name="querybookbynameisbnpublishauthorlink">
+			<result name="success" type="tiles">
+				<param name="location">searchbook</param>
+			</result>
+		</action>
+		
+		<!-- 图书查询请求 -->
+		<action name="querybookbynameisbnpublishauthor" class="com.booksys.book.action.BookAction" method="querybookbynameisbnpublishauthor">
+			<result name="success" type="tiles">
+				<param name="location">searchbook</param>
+			</result>
+		</action>
+		
+		<!-- 图书浏览连接请求 -->
+		<action name="booklistlink" class="com.booksys.book.action.BookAction" method="showBooktypes">
+			<result name="success" type="tiles">
+				<param name="location">booklist</param>
+			</result>
+		</action>	
+		
+		<!-- 图书浏览请求 -->
+		<action name="booklist" class="com.booksys.book.action.BookAction" method="showPagesbybooktype">
+			<result name="success" type="tiles">
+				<param name="location">booklist</param>
+			</result>
+		</action>
+		
+		<!-- 显示图书请求点下一页上一页 -->
+		<action name="showbooks1" class="com.booksys.book.action.BookAction" method="showPagesbybooktype">
+			<result name="success" type="tiles">booklist</result>
+		</action>
+		
+		
+		
+	</package>
+</struts>

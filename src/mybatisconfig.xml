@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="database.properties"></properties>
+		
+	<!-- 取别名 -->
+	<typeAliases>
+		<typeAlias type="com.booksys.po.Books" alias="Books" />
+		<typeAlias type="com.booksys.po.Booktypes" alias="Booktypes" />
+		<typeAlias type="com.booksys.po.Borrowinfos" alias="Borrowinfos" />
+		<typeAlias type="com.booksys.po.Notices" alias="Notices" />
+		<typeAlias type="com.booksys.po.Operators" alias="Operators" />
+		<typeAlias type="com.booksys.po.Readers" alias="Readers" />
+		<typeAlias type="com.booksys.po.Regulations" alias="Regulations" />
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="jdbc"></transactionManager>
+			<dataSource type="pooled">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+				<property name="poolMaximumActiveConnections" value="80" />
+				<property name="poolMaximumIdleConnections" value="20" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper resource="com/booksys/po/Books.xml" />
+		<mapper resource="com/booksys/po/Booktypes.xml" />
+		<mapper resource="com/booksys/po/Borrowinfos.xml" />
+		<mapper resource="com/booksys/po/Notices.xml" />
+		<mapper resource="com/booksys/po/Operators.xml" />
+		<mapper resource="com/booksys/po/Readers.xml" />
+		<mapper resource="com/booksys/po/Regulations.xml" />
+	</mappers>
+</configuration>
+
+

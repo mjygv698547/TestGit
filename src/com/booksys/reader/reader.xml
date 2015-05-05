@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<package name="reader" extends="default" namespace="/">
+	
+	<!-- cym -->
+		<action name="repassword" class="com.booksys.reader.action.ReaderAction" method="repassword">
+			<result name="success" type="tiles">borrowinfo</result>
+			<result name="error" type="tiles">borrowinfo</result>
+		</action>
+		
+		<action name="okLogggin" class="com.booksys.borrowinfo.action.BorrowinfoAction" method="showpages">
+			<result name="success" type="tiles">readerone</result>
+		</action>
+	<!-- cym -->
+	
+		
+		<action name="tomainpages" >
+			<result  type="tiles" >readermain</result>
+		</action>
+		
+	
+	
+		<action name="loginreader" class="com.booksys.reader.action.ReaderLoginAction" method="readerlogin">
+			<result name="success" type="tiles" >readermain</result>
+			<result name="error" >readerLogin.jsp</result>
+		</action>
+		
+		<!-- 跳转到添加读者页面 -->
+		<action name="toaddreader">
+			<result type="tiles" >addreaderinfoxdj</result>
+		</action>
+		
+		
+		<action name="xdjaddreader" class="com.booksys.reader.action.ReaderAction" method="xdjaddreader">
+			<result name="success" type="tiles" >addreaderinfoxdj</result>
+		
+		</action>
+		
+		<action name="showreaderlist" class="com.booksys.reader.action.ReaderAction" method="showreaderlist">
+			<result name="success" type="tiles" >showreaderlistxdj</result>
+		</action>
+		
+		<action name="deletereaderbureaderid" class="com.booksys.reader.action.ReaderAction" method="deletereaderbyreaderid">
+			<result name="success" type="tiles" >showreaderlistxdj</result>
+		</action>
+		
+		
+		<action name="toupdateeffectivedate" class="com.booksys.reader.action.ReaderAction" method="toupdatereadercreatedate">
+			<result name="success" type="tiles">tpeffectivedatepage</result>
+		</action>
+		
+		<action name="editdeaddatexdj" class="com.booksys.reader.action.ReaderAction" method="xdjupdatereaderdeaddate">
+			<result name="success" type="tiles">tpeffectivedatepage</result>
+		</action>
+		
+		<action name="readerexit" class="com.booksys.reader.action.ReaderLoginAction" method="readerexit">
+			<result name="success">/readerLogin.jsp</result>
+		</action>
+		
+		<action name="tologinpage" class="com.booksys.reader.action.ReaderLoginAction" method="topage">
+			<result name="success">/readerLogin.jsp</result>
+		</action>
+
+		
+		
+		
+		
+		
+	</package>
+</struts>

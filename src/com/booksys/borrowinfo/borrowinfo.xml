@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<package name="borrowinfo" extends="default" namespace="/">
+	
+	<!-- cym -->
+
+	
+		<action name="borrowbookline">
+			<result type="tiles">editBorrowbook</result>
+		</action>
+		
+		
+		<action name="getreaderandbookinfo" class="com.booksys.borrowinfo.action.BorrowinfoAction" method="getreaderandbookinfo">
+			<result name="success" type="tiles" >editBorrowbook</result>
+		</action>
+		
+		<action name="borrowbook" class="com.booksys.borrowinfo.action.BorrowinfoAction" method="borrowbook">
+			<result name="success" type="tiles">editBorrowbook</result>
+		</action>
+		
+		<action name="returnbookline">
+			<result type="tiles">editReturnbook</result>
+		</action>
+		
+		<action name="getreturnbookinfobybookcode" class="com.booksys.borrowinfo.action.BorrowinfoAction" method="getreturnbookinfobybookcode">
+			<result name="success" type="tiles" >editReturnbook</result>
+		</action>
+		
+		<action name="returnbook" class="com.booksys.borrowinfo.action.BorrowinfoAction" method="returnbook">
+			<result name="success" type="tiles">editReturnbook</result>
+		</action>
+		
+		<action name="oderbookline">
+			<result type="tiles">editOrderbook</result>
+		</action>
+		
+		<action name="getbookinfobybookname" class="com.booksys.borrowinfo.action.BorrowinfoAction" method="getbookinfobybookname">
+			<result type="tiles">editOrderbook</result>
+		</action>
+		
+		<action name="editborrowinfobybookidandreaderid" class="com.booksys.borrowinfo.action.BorrowinfoAction" method="editborrowinfobybookidandreaderid">
+			<result type="tiles">editOrderbook</result>
+		</action>
+		
+		<action name="reborrowbook" class="com.booksys.borrowinfo.action.BorrowinfoAction" method="getorderbooklistbyreaderid">
+			<result type="tiles">bookreborrow</result>
+		</action>
+		
+		<action name="updatereborrowtimesandlastdate" class="com.booksys.borrowinfo.action.BorrowinfoAction" method="updatereborrowtimesandlastdate">
+			<result type="tiles">bookreborrow</result>
+		</action>
+		
+		<action name="returnmain" >
+			<result type="tiles" >readermain</result>
+		</action>
+		
+	</package>
+</struts>
